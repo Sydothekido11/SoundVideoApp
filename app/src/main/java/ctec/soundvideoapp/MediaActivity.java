@@ -7,11 +7,20 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.view.View;
 import android.content.Intent;
+import android.widget.*;
+import android.media.MediaPlayer;
 
-public class MediaActivity extends AppCompatActivity
+public class MediaActivity extends AppCompatActivity implements Runnable
 {
 
     private Button swapButton;
+    private Button playButton;
+    private Button stopButton;
+    private Button pauseButton;
+    private SeekBar soundSeekBar;
+    private MediaPlayer soundPlayer;
+    private Thread soundThread;
+
 
 
     @Override
@@ -21,8 +30,17 @@ public class MediaActivity extends AppCompatActivity
         setContentView(R.layout.activity_media);
 
         swapButton = (Button) findViewById (R.id.changeScreenButton);
+        playButton = (Button) findViewById (R.id.playButton);
+        stopButton = (Button) findViewById (R.id.stopButton);
+        pauseButton = (Button) findViewById (R.id.pauseButton);
+        soundSeekBar = (SeekBar) findViewById (R.id.soundSeekBar);
+
+        soundPlayer = MediaPlayer.create(this.getBaseContext(), R.raw.lotr);
 
         setupListeners();
+
+        soundThread = new Thread(this);
+        soundThread.start();
     }
 
     @Override
@@ -50,8 +68,10 @@ public class MediaActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+
     private void setupListeners()
     {
+
         swapButton.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View buttonView)
@@ -61,5 +81,75 @@ public class MediaActivity extends AppCompatActivity
             }
 
         });
+
+        playButton.setOnClickListener(new View.OnClickListener()
+        {
+
+            public void onClick(View v)
+            {
+                soundPlayer.start();
+            }
+        });
+
+        pauseButton.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                soundPlayer.pause();
+            }
+
+        });
+
+        stopButton.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View currentView)
+            {
+                soundPlayer.stop();
+               // soundPlayer = MediaPlayer.create(getBaseContext(),  );
+            }
+
+        });
+
+        soundSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
+        {
+           public void onStopTrackingTouch(SeekBar seekBar)
+           {
+           }
+
+            public void onStartTrackingTouch(SeekBar seekBar)
+            {
+            }
+
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
+            {
+                if(fromUser)
+                {
+                    soundPlayer.seekTo(progress);
+                }
+            }
+
+        });
+
+    }
+
+    public void run()
+    {
+        int currentPosition = 0;
+        int soundTotal = soundPlayer.getDuration();
+        soundSeekBar.setMax(soundTotal);
+
+        while (soundPlayer != null && currentPosition < soundTotal)
+        {
+            try
+            {
+                Thread.sleep(300);
+                currentPosition = soundPlayer.getCurrentPosition();
+            }
+            catch(InterruptedException soundException)
+            {
+                return;
+            }
+            soundSeekBar.setProgress(currentPosition);
+        }
     }
 }

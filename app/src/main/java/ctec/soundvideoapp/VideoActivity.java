@@ -6,11 +6,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.view.View;
+import android.content.Intent;
+import android.widget.*;
+import android.net.Uri;
 
 public class VideoActivity extends AppCompatActivity
 {
 
     private Button homeButton;
+    private VideoView myPlayer;
+    private MediaController myVideoController;
+    private Uri videoLocation;
 
 
     @Override
@@ -19,9 +25,20 @@ public class VideoActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
 
+        myPlayer = (VideoView) findViewById(R.id.videoView);
         homeButton = (Button) findViewById(R.id.returnToMedia);
 
+        videoLocation = Uri.parse("android.resource://" + getPackageName() + "/" + );
+        myVideoController = new MediaController(this);
+
+        setupMedia();
         setupListeners();
+    }
+
+    private void setupMedia()
+    {
+        myPlayer.setMediaController(myVideoController);
+        myPlayer.setVideoURI(videoLocation);
     }
 
     @Override
@@ -55,6 +72,10 @@ public class VideoActivity extends AppCompatActivity
         {
           public void onClick(View buttonView)
           {
+
+              Intent returnIntent = new Intent();
+              setResult(RESULT_OK, returnIntent);
+              finish();
 
           }
         });
