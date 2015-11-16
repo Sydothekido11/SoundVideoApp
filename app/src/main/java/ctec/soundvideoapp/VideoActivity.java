@@ -28,7 +28,7 @@ public class VideoActivity extends AppCompatActivity
         myPlayer = (VideoView) findViewById(R.id.videoView);
         homeButton = (Button) findViewById(R.id.returnToMedia);
 
-        videoLocation = Uri.parse("android.resource://" + getPackageName() + "/" + );
+        videoLocation = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.bigbang );
         myVideoController = new MediaController(this);
 
         setupMedia();

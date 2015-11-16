@@ -105,7 +105,7 @@ public class MediaActivity extends AppCompatActivity implements Runnable
             public void onClick(View currentView)
             {
                 soundPlayer.stop();
-               // soundPlayer = MediaPlayer.create(getBaseContext(),  );
+                soundPlayer = MediaPlayer.create(getBaseContext(), R.raw.lotr );
             }
 
         });
