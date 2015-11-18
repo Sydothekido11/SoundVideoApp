@@ -6,7 +6,8 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:paddingBottom="@dimen/activity_vertical_margin"
-                tools:context=".MediaActivity">
+                tools:context=".MediaActivity"
+                android:id="@+id/background">
 
     <Button
         android:layout_width="wrap_content"
@@ -56,5 +57,15 @@
         android:layout_alignBottom="@+id/playButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Color"
+        android:id="@+id/colorButton"
+        android:layout_above="@+id/changeScreenButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"/>
+
 
 </RelativeLayout>

@@ -9,6 +9,7 @@ import android.view.View;
 import android.content.Intent;
 import android.widget.*;
 import android.media.MediaPlayer;
+import android.graphics.Color;
 
 public class MediaActivity extends AppCompatActivity implements Runnable
 {
@@ -20,6 +21,8 @@ public class MediaActivity extends AppCompatActivity implements Runnable
     private SeekBar soundSeekBar;
     private MediaPlayer soundPlayer;
     private Thread soundThread;
+    private Button colorButton;
+    private RelativeLayout background;
 
 
 
@@ -34,6 +37,8 @@ public class MediaActivity extends AppCompatActivity implements Runnable
         stopButton = (Button) findViewById (R.id.stopButton);
         pauseButton = (Button) findViewById (R.id.pauseButton);
         soundSeekBar = (SeekBar) findViewById (R.id.soundSeekBar);
+        colorButton = (Button) findViewById (R.id.colorButton);
+        background = (RelativeLayout) findViewById (R.id.background);
 
         soundPlayer = MediaPlayer.create(this.getBaseContext(), R.raw.lotr);
 
@@ -130,6 +135,34 @@ public class MediaActivity extends AppCompatActivity implements Runnable
 
         });
 
+        colorButton.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View buttonView)
+            {
+                changeColors();
+            }
+
+        });
+
+    }
+
+    private void changeColors()
+    {
+        int blueColor;
+        int redColor;
+        int greenColor;
+
+        blueColor = (int) (Math.random() * 256);
+        redColor = (int) (Math.random() * 256);
+        greenColor = (int) (Math.random() * 256);
+
+        background.setBackgroundColor(Color.rgb(blueColor, redColor, greenColor));
+
+        blueColor = (int) (Math.random() * 265);
+        redColor = (int) (Math.random() * 256);
+        greenColor = (int) (Math.random() * 256);
+
+        colorButton.setBackgroundColor(Color.rgb(blueColor, redColor, greenColor));
     }
 
     public void run()
